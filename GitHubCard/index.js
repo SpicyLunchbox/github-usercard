@@ -36,8 +36,14 @@ axios.get('https://api.github.com/users/SpicyLunchbox')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell', 'bukit3point0'];
+followersArray.forEach(user => {
+  axios.get(`https://api.github.com/users/${user}`)
+  .then( response => {
+    const attachmentPoint = document.querySelector('.cards');
+    const userCard = cardMaker(response.data);
+    attachmentPoint.appendChild(userCard);
+})})
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
