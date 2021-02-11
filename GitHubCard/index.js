@@ -5,7 +5,12 @@ import axios from 'axios';
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-const myData = axios.get('https://api.github.com/users/SpicyLunchbox');
+axios.get('https://api.github.com/users/SpicyLunchbox')
+  .then( response => {
+    const attachmentPoint = document.querySelector('.cards');
+    const westonCard = cardMaker(response.data);
+    attachmentPoint.appendChild(westonCard);
+})
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -53,6 +58,8 @@ const followersArray = [];
     </div>
 */
 function cardMaker(object){
+
+  //creates all elements in memory
   const newCard = document.createElement('div');
   const image = document.createElement('img');
   const cardInfo = document.createElement('div');
@@ -65,11 +72,13 @@ function cardMaker(object){
   const following = document.createElement('p');
   const bio = document.createElement('p');
 
+  //adds class names
   newCard.classList.add('card');
   cardInfo.classList.add('card-info');
   name.classList.add('name');
   username.classList.add('username');
 
+  //creates structure of markup
   newCard.appendChild(image);
   newCard.appendChild(cardInfo);
   cardInfo.appendChild(name);
@@ -81,6 +90,7 @@ function cardMaker(object){
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
 
+  //fills created elements with content
   image.src = object.avatar_url;
   name.textContent = object.name;
   username.textContent = object.login;
@@ -92,6 +102,7 @@ function cardMaker(object){
   following.textContent = `Following: ${object.following}`;
   bio.textContent = object.bio;
 
+  //returns the newly created card
   return newCard;
 }
 
